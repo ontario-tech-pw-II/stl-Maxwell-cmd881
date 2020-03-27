@@ -13,21 +13,21 @@ class Person{
 		string name;
 	    
 	public:
-		void setname(char const *);
+		void setname(string);
 		string getname();
 
 
 		Person(); 				// default constructor
-		Person(const char *);
+		Person(string);
 		Person(const Person &); 		// copy constructor
 
-		Person(const string &);
+		
 
 		virtual ~Person();
 
 };
 
-void Person::setname(char const *n)
+void Person::setname(string n)
 {
 	name = n;
 }
@@ -43,15 +43,12 @@ Person::Person()
 	name = "";
 }
 
-Person::Person(char const *n)
+Person::Person(string n)
 {
 	setname(n);
 }
 
-Person::Person(const string & n)
-{
-	name = n;
-}
+
 
 Person::~Person()
 {
@@ -73,12 +70,18 @@ class Student : public Person{
       	double getgrade();
 
       	Student();    // default constructor
-		Student(char const *, double);
+		Student(string, double);
 		Student(const Student &);  // copy constructor
 
 		~Student();
 
 	friend ostream & operator<<(ostream &, const Student &);
+	bool operator<(Student a){
+		if(grade<a.grade){
+			return true;
+		}
+		return false;
+	}
 
 };
 
@@ -103,7 +106,7 @@ Student::Student(): grade(0)
 {
 }
 
-Student::Student(char const *n, double g): Person(n)
+Student::Student(string n, double g): Person(n)
 {
 	setgrade(g);
 }
@@ -121,6 +124,23 @@ int main()
 {  
 
 	// Write your code for Task 1
+	string strTemp = "";
+	double dblTemp = 0.0;
+	list<Student> lStud;
+
+	for(int i =0;i <=5;i++){
+		cout << "enter name then grade: ";
+		cin >> strTemp;
+		cin >> dblTemp;
+		lStud.push_back(Student(strTemp,dblTemp));
+	}
+
+	lStud.sort();
+
+	list<Student>::const_iterator i;
+	for(i = lStud.cbegin();i!= lStud.cend();i++){
+		cout << *i << endl;
+	}
 		
 }
 
